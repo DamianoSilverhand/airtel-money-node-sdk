@@ -1,7 +1,7 @@
 {
-  "name": "airtel-money-sdk",
+  "name": "airtel-money-node-sdk",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Node.js SDK to integrate with Airtel Money API",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
