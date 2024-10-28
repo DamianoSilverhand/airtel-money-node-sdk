@@ -55,7 +55,7 @@ const { initiateAirtelPayment } = require('airtel-money-node-sdk');
 async function makePayment() {
     try {
         const amount = '100.00';
-        const msisdn = '260XXXXXXXXX';  // Recipient's phone number
+        const msisdn = '977XXXXXX';  // Recipient's phone number without country code
         const reference = 'Invoice #12345';  // Reference for the payment
 
         const paymentStatus = await initiateAirtelPayment(amount, msisdn, reference);
