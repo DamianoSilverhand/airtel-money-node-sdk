@@ -6,6 +6,27 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "Airtel",
+    "Airtel Money",
+    "API",
+    "SDK",
+    "Payments",
+    "Node.js",
+    "Payment Gateway",
+    "Mobile Money Payments",
+    "Financial Integration",
+    "Sandbox",
+    "Production",
+    "Callback",
+    "Bearer Token",
+    "REST API",
+    "HTTP Client",
+    "Node.js",
+    "Airtel Node SDK",
+    "Airtel Money Node SDK"
+  ],
+
   "author": "Damiano Chintala",
   "license": "MIT",
   "dependencies": {

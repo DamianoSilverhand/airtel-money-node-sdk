@@ -1,100 +1,91 @@
-# Airtel Money SDK
+# Airtel Money Node SDK
 
-A Node.js SDK for integrating with Airtel Money API, allowing you to easily request payments through Airtel's payment gateway.
+This SDK provides a streamlined integration for Airtel Money payments in Node.js applications, offering both v1 and v2 API versions, token caching, and a retry-based polling mechanism for payment status tracking.
+
+## Features
+
+- **Dual API Version Support**: Seamless support for both API versions (`v1` and `v2`), including version-based request and response handling.
+- **Bearer Token Caching**: Implements token caching to optimize API requests and reduce load on authentication services.
+- **AES and RSA Encryption**: Utilizes AES for data encryption and RSA for secure key exchange in v2 API.
+- **Retry Mechanism**: Includes configurable retry and timeout settings for polling payment status.
+
+## Prerequisites
+
+- Node.js (>= 14.x)
+- NPM or Yarn
+- Airtel Money API access (sandbox or production)
 
 ## Installation
 
-Install the package using npm:
+Install the package in your Node.js project:
 
 ```bash
-npm install airtel-money-sdk --save
+npm install airtel-money-node-sdk
 ```
 
-## Setup
+## Configuration
 
-Create a `.env` file in the root of your project and add your Airtel Money API credentials:
+Create a `.env` file at your project root and add the following variables:
 
-```env
-# Airtel Money API Credentials
-CLIENT_ID=your_client_id
-CLIENT_SECRET=your_client_secret
+```bash
+# Airtel API Credentials and Configuration
+CLIENT_ID=<your_client_id>
+CLIENT_SECRET=<your_client_secret>
 GRANT_TYPE=client_credentials
+AIRTEL_API_BASE_URL=<your_airtel_api_base_url>
+COUNTRY=<country_code>
+CURRENCY=<currency_code>
+AIRTEL_API_VERSION=1              # Set to '1' or '2' based on your API version
 
-# Airtel Money API Base URL
-AIRTEL_API_BASE_URL=https://openapiuat.airtel.africa
-
-# Payment Details
-COUNTRY=UG
-CURRENCY=UGX
+# Timeout and Retry Configuration
+POOLING_TIMEOUT=30000             # Timeout for API requests (in ms)
+DEFAULT_POLLING_INTERVAL_MS=5000  # Interval for polling payment status (in ms)
+DEFAULT_MAX_RETRIES=5             # Maximum retries for polling
 ```
-
-Replace the placeholder values (`your_client_id`, `your_client_secret`) with your actual credentials.
 
 ## Usage
 
-Import the SDK and use it to initiate a payment:
+### 1. Initialize Payment
+
+To start a payment, call the `initiateAirtelPayment` function with the payment amount, recipient's phone number, and a reference.
 
 ```javascript
-const { initiateAirtelPayment } = require('airtel-money-sdk');
+const { initiateAirtelPayment } = require('airtel-money-node-sdk');
 
-async function processPayment() {
+async function makePayment() {
     try {
-        const amount = 1000; // Amount to be charged
-        const msisdn = '1234567890'; // Subscriber's phone number
-        const reference = 'Payment for Order 12345'; // Payment reference
+        const amount = '100.00';
+        const msisdn = '260XXXXXXXXX';  // Recipient's phone number
+        const reference = 'Invoice #12345';  // Reference for the payment
 
-        const response = await initiateAirtelPayment(amount, msisdn, reference);
-        console.log('Payment Response:', response);
+        const paymentStatus = await initiateAirtelPayment(amount, msisdn, reference);
+        console.log('Final Payment Status:', paymentStatus);
     } catch (error) {
-        console.error('Error processing payment:', error.message);
+        console.error('Payment initiation failed:', error.message);
     }
 }
 
-// Execute the payment process
-processPayment();
+makePayment();
 ```
 
-## API Methods
+### 2. Request Payment (v1 and v2)
 
-### `initiateAirtelPayment(amount, msisdn, reference)`
+The SDK handles both v1 and v2 requests internally based on the specified `AIRTEL_API_VERSION`.
 
-This function initiates a payment request to Airtel Money.
+### 3. Polling Payment Status
 
-- **Parameters:**
-  - `amount` (number): The amount to charge the subscriber.
-  - `msisdn` (string): The subscriber's MSISDN (phone number).
-  - `reference` (string): A reference string for the transaction.
-
-- **Returns:**
-  - A promise that resolves to the payment response object from Airtel Money API.
+The SDK includes a retry-based polling mechanism for v1 and v2 payment statuses, configurable with `DEFAULT_MAX_RETRIES` and `DEFAULT_POLLING_INTERVAL_MS` in `.env`.
 
 ## Error Handling
 
-Errors during the API calls are caught and logged to the console. The SDK will throw an error if the payment request fails, so make sure to handle these errors appropriately in your application.
-
-## Environment Variables
-
-The SDK relies on environment variables for configuration:
-
-- `CLIENT_ID`: Your Airtel Money client ID.
-- `CLIENT_SECRET`: Your Airtel Money client secret.
-- `GRANT_TYPE`: The grant type for authentication, typically `client_credentials`.
-- `AIRTEL_API_BASE_URL`: The base URL for the Airtel Money API.
-- `COUNTRY`: The country code (e.g., `UG` for Uganda).
-- `CURRENCY`: The currency code (e.g., `UGX` for Ugandan Shillings).
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+All errors during API requests are logged in detail, with full response data, headers, and status. The SDK retries requests up to the maximum retry count.
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request on the [GitHub repository](https://github.com/yourusername/airtel-money-sdk).
+Contributions are welcome! Feel free to submit a pull request or open an issue for any improvements or suggestions.
 
-## Support
+## License
 
-For support, please raise an issue on the [GitHub repository](https://github.com/yourusername/airtel-money-sdk).
+This project is licensed under the MIT License. See the LICENSE file for details.
 
-## Official Documentation
-
-For more information on the Airtel Money API, please refer to the [official Airtel Money developer documentation](https://developer.airtel.africa).
+--- 
