@@ -143,7 +143,7 @@ The SDK interacts with the following Airtel Money API endpoints:
 
 ## Contributing
 
-Contributions are welcome! Feel free to submit a pull request or open an issue for any improvements or suggestions.
+Contributions are welcome! Please read the [CONTRIBUTING.md](./CONTRIBUTING.md) file for detailed guidelines before submitting a pull request or opening an issue.
 
 ## License
 
