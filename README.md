@@ -83,6 +83,30 @@ async function makePayment() {
 }
 
 makePayment();
+
+### 2. Poll Payment Status
+
+To check the status of an existing payment without creating a new one, use the `pollPaymentStatus` function:
+
+```javascript
+const { pollPaymentStatus } = require('airtel-money-node-sdk');
+
+async function checkPaymentStatus() {
+    try {
+        const transactionId = 'your_transaction_id_here';
+        const status = await pollPaymentStatus(transactionId);
+        console.log('Payment Status:', status);
+        
+        // status will contain:
+        // { status: 'SUCCESS' | 'FAILED' | 'PENDING' | 'UNKNOWN', data: responseData, message: string }
+        
+    } catch (error) {
+        console.error('Status check failed:', error.message);
+    }
+}
+
+checkPaymentStatus();
+```
 ```
 
 ### 2. API Version Support
